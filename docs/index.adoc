@@ -1,0 +1,157 @@
+:toclevels: 3
+:keywords: grails,plugin,bitcoin,lightning,java,lnd,lightningj
+:description: Grails 3.x Plugin to integrate LightningJ into a Grails application.
+:source-highlighter: highlightjs
+
+= LightningJ For Grails
+
+_Lightning APIs for Grails_
+V {project-version}, {localdate}
+
+== Introduction
+
+Grails 3.x Plugin to integrate LightningJ into a Grails application.
+
+For more information on LightningJ project see http://www.lightningj.org
+
+More information and source code can be found on the link:https://github.com/lightningj-org/lightningj-grails[Github site].
+There it is possible to report issues and contribute code.
+
+_Important_: This API is still in beta and API methods might change before real production release. +
+*All use of this library is on your own risk.*
+
+
+=== License
+
+This library is Open Source and released under the LGPL v3 License. A link
+to the license agreement can be found link:LICENSE.txt[here].
+
+== Whats New
+
+* 0.4-Beta : This is the initial release with LndService and Controller enhancements.
+
+=== Roadmap
+
+* Create example application showing how to integrate lightning calls inside your web application.
+
+* Support asynchronous feedback to browser.
+
+== Using LightningJ-Grails Library
+
+=== Step 1 Add Plugin to build.gradle
+
+In the dependencies section add:
+
+[subs="attributes"]
+----
+    compile "org.lightningj:lightningj-grails:{project-version}"
+----
+
+All tags and releases is signed with the following link:http://www.lightningj.org/lightningj-release-pubkey.asc[GPG Key].
+
+GPG Key Fingerprint:
+
+    7C0F 80B8 BD9F E3B8 1388  4BA1 9515 B31D DD9B BCCD
+
+=== Step 2 Add LND Configuration
+
+In application.yml add configuration to initialize the LND Service APIs
+
+    # LightingJ Grails configuration
+    lightningj:
+        lnd:
+            host: localhost
+            port: 20001
+            trustedcert: "~/Library/Application Support/Lnd/tls.cert"
+            macaroon: "~/Library/Application Support/Lnd/admin.macaroon"
+
+The host, port and trustedcert settings are mandatory and macaroon might be omitted if LND is run in --nomacaroons mode.
+
+If more advanced configuration is needed it is possible to initialize LND APIs using a custom GRPC ManagedChannel, but
+this have to be done before any LND API calls. For instance in BootStrap.groovy. To manually initialize the APIs call
+the lndService.init(..) method and in that case is no settings in application.yml required.
+
+=== Step 3 Inject the LND Service
+
+In your artifacts (controller, services, etc) will LndService be injected automatically. See example below
+on how to access the different APIs.
+
+[source,java]
+----
+    class InvoiceController {
+
+        LndService lndService
+
+        def index() {
+           // To make a synchronous call use lndService.sync.<method>
+           lndService.sync.walletBalance()
+
+           // To make a asynchronous call use lndService.async.<method>
+           lndService.async.walletBalance(new StreamObserver<WalletBalanceResponse>() {
+                       @Override
+                       void onNext(WalletBalanceResponse value) {
+                       }
+
+                       @Override
+                       void onError(Throwable t) {
+                       }
+
+                       @Override
+                       void onCompleted() {
+                       }
+            })
+
+            // To access the wallet APIs use lndService.wallet.sync.<method> and lndService.wallet.async.<method>
+
+        }
+----
+
+For more details on how to use the APIs see link:http://www.lightningj.org[] and the library's
+link:http://www.lightningj.org/javadoc/index.html[JavaDoc]
+
+== Controller Enhancements
+
+The plugin enhances all controllers with two help methods to simplify the conversion between JSON and or XML and
+wrapped LND GRPC Messages.
+
+The first method are 'asMessage(Class messageType)' that automatically parses request data into LND message depending
+on the content negotiation done by the client, i.e the contentType sent in the request.
+
+The second method is a render(Message message) method that renders the wrapped LND message into content negotiated format
+(XML or JSON). Either by the client specifying the content type in the 'Accept' header or by ending the controller url with
+'.json' or '.xml'.
+
+Supported contentTypes in request and responses are 'application/json', 'text/json', 'application/xml' and 'text/xml'.
+
+Here is an example of a controller using the extra methods:
+
+[source,java]
+----
+    class InvoiceController {
+
+        LndService lndService
+
+        def index() {
+           // asMessage converts from XML or JSON to wrapped LND Message
+           Invoice invoice = asMessage Invoice
+           // Call LND using the sync API
+           AddInvoiceResponse response = lndService.sync.addInvoice(invoice)
+           // Render the response back to JSON or XML
+           render response
+        }
+
+    }
+----
+
+
+
+== Building the Plugin
+
+To build from source clone the repository and use gradlew to build.
+
+    git clone https://github.com/lightningj-org/lightningj-grails.git
+    cd lightningj-grails
+    ./gradlew install
+
+The generated plugin can now be used in your project by using mavenLocal.
+

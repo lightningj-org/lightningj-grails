@@ -27,10 +27,10 @@ Grails 3.x Plugin to integrate LightningJ into a Grails application.
     def license = "LGPL3"
 
     // Details of company behind the plugin (if there is one)
-//    def organization = [ name: "My Company", url: "http://www.my-company.com/" ]
+    def organization = [ name: "LightningJ", url: "http://lightningj.org/" ]
 
     // Any additional developers beyond the author specified above.
-//    def developers = [ [ name: "Joe Bloggs", email: "joe@bloggs.net" ]]
+    def developers = [ [ name: "Philip Vendil", email: "info@lightningj.org" ]]
 
     // Location of the plugin's issue tracker.
     def issueManagement = [ system: "Github Issues", url: "https://github.com/lightningj-org/lightningj-grails/issues" ]
@@ -38,9 +38,9 @@ Grails 3.x Plugin to integrate LightningJ into a Grails application.
     // Online location of the plugin's browseable source code.
     def scm = [ url: "https://github.com/lightningj-org/lightningj-grails" ]
 
-    Closure doWithSpring() { {->
-            // TODO Implement runtime spring config (optional)
-        }
+    Closure doWithSpring() {
+
+
     }
 
     void doWithDynamicMethods() {

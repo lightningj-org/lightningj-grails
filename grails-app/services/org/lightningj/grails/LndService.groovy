@@ -13,7 +13,6 @@
 package org.lightningj.grails
 
 import grails.core.GrailsApplication
-import groovy.util.logging.Slf4j
 import io.grpc.ManagedChannel
 import io.grpc.netty.GrpcSslContexts
 import io.grpc.netty.NettyChannelBuilder
@@ -22,12 +21,15 @@ import io.netty.handler.ssl.SslContextBuilder
 import io.netty.handler.ssl.SslProvider
 import org.grails.core.exceptions.GrailsConfigurationException
 import org.lightningj.lnd.wrapper.AsynchronousLndAPI
+import org.lightningj.lnd.wrapper.AsynchronousWalletUnlockerAPI
 import org.lightningj.lnd.wrapper.MacaroonClientInterceptor
 import org.lightningj.lnd.wrapper.MacaroonContext
 import org.lightningj.lnd.wrapper.StaticFileMacaroonContext
 import org.lightningj.lnd.wrapper.SynchronousLndAPI
+import org.lightningj.lnd.wrapper.SynchronousWalletUnlockerAPI
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+
 
 import javax.annotation.PreDestroy
 
@@ -40,9 +42,7 @@ import javax.annotation.PreDestroy
  */
 
 class LndService {
-    // TODO Test Config
-    // TODO Test Logging
-    // TODO Test Exceptions
+
     // TODO Test Shutdown
     // TODO TEST MultiThreading
     GrailsApplication grailsApplication
@@ -52,6 +52,42 @@ class LndService {
     private SynchronousLndAPI syncAPI = null
     private AsynchronousLndAPI asyncAPI = null
     private ManagedChannel managedChannel = null
+    private Wallet wallet = new Wallet()
+
+    class Wallet{
+        SynchronousWalletUnlockerAPI walletUnlockSyncAPI = null
+        AsynchronousWalletUnlockerAPI walletUnlockAsyncAPI = null
+
+        /**
+         * Retrieves the Wallet Unlock Synchronous (Blocking) API instance.
+         * @return the Wallet Unlock Synchronous (Blocking) API instance.
+         */
+        SynchronousWalletUnlockerAPI getSync() {
+            if(walletUnlockSyncAPI == null){
+                walletUnlockSyncAPI = new SynchronousWalletUnlockerAPI(getChannel())
+            }
+            return walletUnlockSyncAPI
+        }
+
+        /**
+         * Retrieves the Wallet Unlock Asynchronous (Non-blocking) API instance.
+         * @return the Wallet Unlock Asynchronous (Non-blocking) API instance.
+         */
+        AsynchronousWalletUnlockerAPI getAsync(){
+            if(walletUnlockAsyncAPI == null){
+                walletUnlockAsyncAPI = new AsynchronousWalletUnlockerAPI(getChannel())
+            }
+            return walletUnlockAsyncAPI
+        }
+    }
+
+    /**
+     * Getter for the wallet APIs
+     * @return all wallet unlock apis.
+     */
+    Wallet getWallet(){
+        return wallet
+    }
 
     /**
      * Method to manually init the Service with a managed channel with custom SSL Context or Macaroon Context.
@@ -99,6 +135,13 @@ class LndService {
         if(asyncAPI){
             asyncAPI.close()
             asyncAPI = null
+        }
+        if(wallet.walletUnlockSyncAPI){
+            wallet.walletUnlockSyncAPI.close()
+        }
+
+        if(wallet.walletUnlockAsyncAPI){
+            wallet.walletUnlockAsyncAPI.close()
         }
     }
 

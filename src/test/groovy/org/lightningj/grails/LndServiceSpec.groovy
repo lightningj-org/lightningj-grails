@@ -7,7 +7,9 @@ import org.grails.config.PropertySourcesConfig
 import org.grails.config.yaml.YamlPropertySourceLoader
 import org.grails.core.exceptions.GrailsConfigurationException
 import org.lightningj.lnd.wrapper.AsynchronousLndAPI
+import org.lightningj.lnd.wrapper.AsynchronousWalletUnlockerAPI
 import org.lightningj.lnd.wrapper.SynchronousLndAPI
+import org.lightningj.lnd.wrapper.SynchronousWalletUnlockerAPI
 import org.slf4j.Logger
 import org.springframework.core.io.ByteArrayResource
 import spock.lang.Specification
@@ -53,6 +55,30 @@ class LndServiceSpec extends Specification implements ServiceUnitTest<LndService
         then:
         api instanceof AsynchronousLndAPI
         service.async == api
+    }
+
+    void "Verify that wallet.getSync() is lazy-loading and caching the API"(){
+        setup:
+        useConfig(validConfig)
+        expect:
+        service.wallet.walletUnlockSyncAPI == null
+        when:
+        def api = service.wallet.sync
+        then:
+        api instanceof SynchronousWalletUnlockerAPI
+        service.wallet.sync == api
+    }
+
+    void "Verify that wallet.getAsync() is lazy-loading and caching the API"(){
+        setup:
+        useConfig(validConfig)
+        expect:
+        service.wallet.walletUnlockAsyncAPI == null
+        when:
+        def api = service.wallet.async
+        then:
+        api instanceof AsynchronousWalletUnlockerAPI
+        service.wallet.async == api
     }
 
     void "Verify that close calls close on all underlying APIs"(){
