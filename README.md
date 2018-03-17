@@ -3,7 +3,7 @@
 LightningJ Grails plugin is a project to simplify the usage of the LightningJ 
 library in Grails 3.3.x applications and above.
 
-For documentation see [docs/index.adoc]() of the project web-site at
+For documentation see docs/index.adoc of the project web-site at
 http://grails.lightningj.org
 
 
