@@ -47,11 +47,8 @@ In the dependencies section add:
     compile "org.lightningj:lightningj-grails:{project-version}"
 ----
 
-All tags and releases is signed with the following link:http://www.lightningj.org/lightningj-release-pubkey.asc[GPG Key].
-
-GPG Key Fingerprint:
-
-    7C0F 80B8 BD9F E3B8 1388  4BA1 9515 B31D DD9B BCCD
+All tags and releases is signed with bintrays internal GPG keys due to
+lack of support of SmartCard Signing in the grails plugin publishing process.
 
 === Step 2 Add LND Configuration
 
