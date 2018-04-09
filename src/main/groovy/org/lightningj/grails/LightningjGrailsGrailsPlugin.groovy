@@ -19,7 +19,7 @@ Grails 3.x Plugin to integrate LightningJ into a Grails application.
 '''
 
     // URL to the plugin's documentation
-    def documentation = "http://grails.org/plugin/lightningj-grails"
+    def documentation = "http://grails.lightningj.org"
 
     // Extra (optional) plugin metadata
 

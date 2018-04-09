@@ -1,6 +1,6 @@
 :toclevels: 3
 :keywords: grails,plugin,bitcoin,lightning,java,lnd,lightningj
-:description: Grails 3.x Plugin to integrate LightningJ into a Grails application.
+:description: Grails 3.3.x Plugin to integrate LightningJ into a Grails application.
 :source-highlighter: highlightjs
 
 = LightningJ For Grails
@@ -28,7 +28,8 @@ to the license agreement can be found link:LICENSE.txt[here].
 
 == Whats New
 
-* 0.4-Beta : This is the initial release with LndService and Controller enhancements.
+* 0.4.1-Beta : Updated with 0.4.1 version of LightningJ
+* 0.3-Beta : This is the initial release with LndService and Controller enhancements.
 
 === Roadmap
 
@@ -102,6 +103,8 @@ on how to access the different APIs.
 
         }
 ----
+
+_Important_ remember to add some form of authorization mechanism since the code above will make calls to LND anonymous.
 
 For more details on how to use the APIs see link:http://www.lightningj.org[] and the library's
 link:http://www.lightningj.org/javadoc/index.html[JavaDoc]
