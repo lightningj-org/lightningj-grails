@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.6.1">
-<meta name="description" content="Grails 3.x Plugin to integrate LightningJ into a Grails application.">
+<meta name="description" content="Grails 3.3.x Plugin to integrate LightningJ into a Grails application.">
 <meta name="keywords" content="grails,plugin,bitcoin,lightning,java,lnd,lightningj">
 <title>LightningJ For Grails</title>
 <style>
@@ -759,7 +759,7 @@ p.tableblock.header { color: #6d6e71; }
 <div class="sectionbody">
 <div class="paragraph">
 <p><em>Lightning APIs for Grails</em>
-V 0.3-Beta, 2018-03-17</p>
+V 0.4.1-Beta, 2018-04-09</p>
 </div>
 </div>
 </div>
@@ -795,7 +795,10 @@ to the license agreement can be found <a href="LICENSE.txt">here</a>.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>0.4-Beta : This is the initial release with LndService and Controller enhancements.</p>
+<p>0.4.1-Beta : Updated with 0.4.1 version of LightningJ</p>
+</li>
+<li>
+<p>0.3-Beta : This is the initial release with LndService and Controller enhancements.</p>
 </li>
 </ul>
 </div>
@@ -824,19 +827,12 @@ to the license agreement can be found <a href="LICENSE.txt">here</a>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>    compile "org.lightningj:lightningj-grails:0.3-Beta"</pre>
+<pre>    compile "org.lightningj:lightningj-grails:0.4.1-Beta"</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>All tags and releases is signed with the following <a href="http://www.lightningj.org/lightningj-release-pubkey.asc">GPG Key</a>.</p>
-</div>
-<div class="paragraph">
-<p>GPG Key Fingerprint:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>7C0F 80B8 BD9F E3B8 1388  4BA1 9515 B31D DD9B BCCD</pre>
-</div>
+<p>All tags and releases is signed with bintrays internal GPG keys due to
+lack of support of SmartCard Signing in the grails plugin publishing process.</p>
 </div>
 </div>
 <div class="sect2">
@@ -899,6 +895,9 @@ on how to access the different APIs.</p>
 
         }</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p><em>Important</em> remember to add some form of authorization mechanism since the code above will make calls to LND anonymous.</p>
 </div>
 <div class="paragraph">
 <p>For more details on how to use the APIs see <a href="http://www.lightningj.org" class="bare">http://www.lightningj.org</a> and the library&#8217;s
@@ -970,7 +969,7 @@ cd lightningj-grails
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-17 21:55:11 CET
+Last updated 2018-04-09 13:28:15 CEST
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
