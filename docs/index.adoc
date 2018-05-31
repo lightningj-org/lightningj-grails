@@ -10,7 +10,7 @@ V {project-version}, {localdate}
 
 == Introduction
 
-Grails 3.x Plugin to integrate LightningJ into a Grails application.
+Grails 3.3.x Plugin to integrate LightningJ into a Grails application.
 
 For more information on LightningJ project see http://www.lightningj.org
 
@@ -28,6 +28,7 @@ to the license agreement can be found link:LICENSE.txt[here].
 
 == Whats New
 
+* 0.4.2-Beta : Updated with 0.4.2 version of LightningJ
 * 0.4.1-Beta : Updated with 0.4.1 version of LightningJ
 * 0.3-Beta : This is the initial release with LndService and Controller enhancements.
 
