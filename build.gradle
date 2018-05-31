@@ -14,7 +14,7 @@ buildscript {
     }
 }
 
-version "0.4.1-Beta"
+version "0.4.2-Beta"
 group "org.lightningj"
 
 apply plugin:"eclipse"
