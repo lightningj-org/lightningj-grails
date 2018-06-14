@@ -12,10 +12,12 @@ V {project-version}, {localdate}
 
 Grails 3.3.x Plugin to integrate LightningJ into a Grails application.
 
-For more information on LightningJ project see http://www.lightningj.org
+For more information on LightningJ project see https://www.lightningj.org
 
 More information and source code can be found on the link:https://github.com/lightningj-org/lightningj-grails[Github site].
 There it is possible to report issues and contribute code.
+
+If you want updates on this project, follow https://twitter.com/LightningJ_org on twitter.
 
 _Important_: This API is still in beta and API methods might change before real production release. +
 *All use of this library is on your own risk.*
@@ -28,9 +30,10 @@ to the license agreement can be found link:LICENSE.txt[here].
 
 == Whats New
 
-* 0.4.2-Beta : Updated with 0.4.2 version of LightningJ
-* 0.4.1-Beta : Updated with 0.4.1 version of LightningJ
-* 0.3-Beta : This is the initial release with LndService and Controller enhancements.
+* 0.4.2-Beta-2 : Updated with 0.4.2-Beta-2 version of LightningJ
+* 0.4.2-Beta   : Updated with 0.4.2 version of LightningJ
+* 0.4.1-Beta   : Updated with 0.4.1 version of LightningJ
+* 0.3-Beta     : This is the initial release with LndService and Controller enhancements.
 
 === Roadmap
 
@@ -107,8 +110,8 @@ on how to access the different APIs.
 
 _Important_ remember to add some form of authorization mechanism since the code above will make calls to LND anonymous.
 
-For more details on how to use the APIs see link:http://www.lightningj.org[] and the library's
-link:http://www.lightningj.org/javadoc/index.html[JavaDoc]
+For more details on how to use the APIs see link:https://www.lightningj.org[] and the library's
+link:https://www.lightningj.org/javadoc/index.html[JavaDoc]
 
 == Controller Enhancements
 
